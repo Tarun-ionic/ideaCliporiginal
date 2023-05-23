@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "206566280190",
+    "firebase_url": "https://ideaclip-app-default-rtdb.firebaseio.com",
+    "project_id": "ideaclip-app",
+    "storage_bucket": "ideaclip-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206566280190:android:8c081f8e05d71832db0eaf",
+        "android_client_info": {
+          "package_name": "com.actson.ideaclip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206566280190-kcq3asegghjo1n56tb6avs82011go6rl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.actson.ideaclip",
+            "certificate_hash": "0433d18a7fe706b70dfb8c7454491af31780cb8d"
+          }
+        },
+        {
+          "client_id": "206566280190-mlhr7jca7g2n1h8r8mljrokrih3nv83h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.actson.ideaclip",
+            "certificate_hash": "f06693f60e9c0e54c0eb4ebc0081f2adf2a9153d"
+          }
+        },
+        {
+          "client_id": "206566280190-8656b1qsni02mbjf0e75cohn67um6l1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBzJeIPo2hsaKAz4jL8-gc8pwKZSfL8eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206566280190-8656b1qsni02mbjf0e75cohn67um6l1g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "206566280190-9u7ndffriqivvtqoo9gi2j7m099t8e7n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.actson.ideaclip",
+                "app_store_id": "1578859437"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
