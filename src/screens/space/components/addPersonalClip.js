@@ -219,6 +219,7 @@ export default function AddPersonalClip({
                     allFiles: s.allFiles.concat(mappedFiles.slice(0, fileCount)), file: mappedFiles[0]
                 }
             });
+            setIsLoading(false);
         } else {
             setState(s => {
                 return {
@@ -226,9 +227,8 @@ export default function AddPersonalClip({
                     allFiles: s.allFiles.concat(mappedFiles.slice(0, fileCount))
                 }
             });
+            setIsLoading(false);
         }
-        setIsLoading(false);
-
     }
 
     const handleGalleryAudio = async () => {
@@ -511,7 +511,7 @@ export default function AddPersonalClip({
                         </>
                     }
                 </View>
-                <ProgressLoader visible={isLoading}/>
+                {/* <ProgressLoader visible={isLoading}/> */}
 
             </KeyboardAvoidingView>
 

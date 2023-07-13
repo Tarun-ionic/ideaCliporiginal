@@ -19,7 +19,7 @@ import {useSession} from "../../../context/SessionContext";
 import apiConstant from "../../../constant/apiConstant";
 import {userStatus} from "../../../utilities/constant";
 
-export default function MessengerPrivacy({
+export default function MessengerPrivacy({ 
                                              theme,
                                              messenger,
                                              user,

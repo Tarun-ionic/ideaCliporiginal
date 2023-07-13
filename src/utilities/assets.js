@@ -164,6 +164,7 @@ export const screens = {
 
 export const personalSpaceIcons =(dark=false)=>{
     return {
+        email: require('../assets/screen/personalSpace/email.png'),
         myInterest: require('../assets/screen/personalSpace/myInterest.png'),
         chat: dark ? require('../assets/screen/personalSpace/1to1Dark.png') : require('../assets/screen/personalSpace/1to1Light.png'),
         invite: dark ? require('../assets/screen/personalSpace/inviteDark.png') : require('../assets/screen/personalSpace/inviteLight.png'),

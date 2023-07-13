@@ -1,47 +1,49 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet, Text, View, VirtualizedList} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, Platform, StyleSheet, Text, View, VirtualizedList } from 'react-native';
 import LottieView from 'lottie-react-native';
-import {strings} from '../../../constant/strings';
-import {useSession} from '../../../context/SessionContext';
-import {useTheme} from '../../../context/ThemeContext';
-import {lottie} from '../../../utilities/assets';
+import { profileData, userType } from '../../../utilities/constant';
+import { strings } from '../../../constant/strings';
+import { useSession } from '../../../context/SessionContext';
+import { useTheme } from '../../../context/ThemeContext';
+import { lottie } from '../../../utilities/assets';
 import scale from '../../../utilities/scale';
 import SystemSetting from "react-native-system-setting";
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import apolloLib from '../../../lib/apolloLib';
-import {mutations, queries} from '../../../schema';
+import { mutations, queries } from '../../../schema';
 import AttachClipCard from '../components/attachClipCard';
 import logger from '../../../lib/logger';
-import {pcTypes, viewWidth} from '../../../utilities/constant';
+import { pcTypes, viewWidth } from '../../../utilities/constant';
 import IdeanGalleryClipView from './ideanGalleryClipView';
 import AddPersonalClip from '../components/addPersonalClip';
-import {parseTempClip} from './ideanGalleryHelper';
+import { parseTempClip } from './ideanGalleryHelper';
 import apiConstant from '../../../constant/apiConstant';
 import Toast from 'react-native-simple-toast';
-import {onTrigger, useDebounce} from '../../../utilities/helper';
+import { onTrigger, useDebounce } from '../../../utilities/helper';
+import { profileRef } from "../../messenger/messengerHelper";
 export default function IdeanGalleryList({
-                                             profile,
-                                             refresh,
-                                             isCollab = false,
-                                             showCollab = true,
-                                             following = false,
-                                             filters = {},
-                                             locInfo = {lat: '', long: '', location: ''},
-                                             attach = false,
-                                             dismissFilePicker = () => {
-                                             },
-                                             navigation,
-                                             onNewClip=()=>{}
-                                         }) {
-    const {theme, width} = useTheme();
+    profile,
+    refresh,
+    isCollab = false,
+    showCollab = true,
+    following = false,
+    filters = {},
+    locInfo = { lat: '', long: '', location: '' },
+    attach = false,
+    dismissFilePicker = () => {
+    },
+    navigation,
+    onNewClip = () => { }
+}) {
+    const { theme, width } = useTheme();
     const session = useSession();
-    const {user} = session;
+    const { user } = session;
     const styles = SpaceStyle(theme, width);
     const focused = useIsFocused();
     const list = useRef();
-    const {debounce} = useDebounce()
+    const { debounce } = useDebounce()
 
-/////////////////////////////////// States ///////////////////////////////////////////////
+    /////////////////////////////////// States ///////////////////////////////////////////////
 
     const [loading, setLoading] = useState(true);
     const [customFilter, setCustomFilter] = useState(filters);
@@ -55,7 +57,7 @@ export default function IdeanGalleryList({
     const [createPersonalClip, setCreatePersonalClip] = useState(false)
     const [fetching, setFetching] = useState(false)
 
-// list view reference
+    // list view reference
     const onIdeanViewRef = React.useRef((viewableItems) => {
         if (viewableItems?.viewableItems?.length > 0) {
             setCurrentlyPlaying(viewableItems?.viewableItems?.length > 1 ? viewableItems.viewableItems[1]?.item?.id : viewableItems.viewableItems[0]?.item?.id || '')
@@ -63,41 +65,21 @@ export default function IdeanGalleryList({
             setCurrentlyPlayingVolume(0);
         }
     })
-    const ideanViewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 70})
+    const ideanViewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 70 })
 
-/////////////////////////////////// Use effects ///////////////////////////////////////////////
+    /////////////////////////////////// Use effects ///////////////////////////////////////////////
 
-// intiate clip creation
     useEffect(() => {
-        if (focused) {
-            if (attach === true)
-                setCreatePersonalClip(attach)
-        } else {
-            dismissFilePicker()
-        }
-    }, [attach])
-
-// add volume listener
-    useEffect(() => {
-
-        const volumeListener = SystemSetting.addVolumeListener((data) => {
-            setCurrentlyPlayingVolume(data.value)
+        const subscriber = profileRef(profile.uid).onSnapshot(documentSnapshot => {
+            if (documentSnapshot) {
+                lovitzCountRefreshhandler()
+            }
         });
-        return () => {
-            SystemSetting.removeListener(volumeListener)
-        };
+        return () => subscriber();
     }, [])
-    useEffect(()=>{
-        console.log("showcollab ",showCollab)
-    },[showCollab])
 
-// set new filter
-    useEffect(() => {
-        if (JSON.stringify(filters) !== JSON.stringify(customFilter)) setCustomFilter(filters)
-    }, [filters])
 
-// fetch data
-    useEffect(() => {
+    const lovitzCountRefreshhandler = () => {
         if (user) {
             if (isCollab && Object.keys(customFilter).length > 0) {
                 setLoading(true)
@@ -122,9 +104,9 @@ export default function IdeanGalleryList({
                             },
                         },
                     })
-                    .then(({data, error}) => {
+                    .then(({ data, error }) => {
                         setLoading(false);
-                        const {personalClipsLatestFiltered} = data;
+                        const { personalClipsLatestFiltered } = data;
                         if (personalClipsLatestFiltered) {
                             setOriginalClipsArray(personalClipsLatestFiltered);
                             let filteredList = personalClipsLatestFiltered.filter(
@@ -158,9 +140,9 @@ export default function IdeanGalleryList({
                             limit: 10,
                         },
                     })
-                    .then(({data, error}) => {
+                    .then(({ data, error }) => {
                         setLoading(false);
-                        const {personalClips} = data;
+                        const { personalClips } = data;
                         if (personalClips && Array.isArray(personalClips)) {
                             setOriginalClipsArray(personalClips);
                             const filteredList = personalClips.filter(
@@ -182,12 +164,54 @@ export default function IdeanGalleryList({
                     });
             }
         }
+    }
+
+
+
+    // intiate clip creation
+    useEffect(() => {
+        if (focused) {
+            if (attach === true)
+                setCreatePersonalClip(attach)
+        } else {
+            dismissFilePicker()
+        }
+    }, [attach])
+
+    /* Refresh */
+
+    useEffect(() => {
+        fetchClip();
+    }, [profile, refresh, navigation])
+
+    // add volume listener
+    useEffect(() => {
+
+        const volumeListener = SystemSetting.addVolumeListener((data) => {
+            setCurrentlyPlayingVolume(data.value)
+        });
+        return () => {
+            SystemSetting.removeListener(volumeListener)
+        };
+    }, [])
+    useEffect(() => {
+        console.log("showcollab ", showCollab)
+    }, [showCollab])
+
+    // set new filter
+    useEffect(() => {
+        if (JSON.stringify(filters) !== JSON.stringify(customFilter)) setCustomFilter(filters)
+    }, [filters])
+
+    // fetch data
+    useEffect(() => {
+        lovitzCountRefreshhandler()
     }, [user, refresh, showCollab, customFilter])
 
 
-/////////////////////////////////// functions ///////////////////////////////////////////////
+    /////////////////////////////////// functions ///////////////////////////////////////////////
 
-// scroll list to index
+    // scroll list to index
     const scrollToIndex = (index = 0) => {
         if (index >= 0 && list?.current) {
             list?.current?.scrollToIndex({
@@ -197,7 +221,7 @@ export default function IdeanGalleryList({
         }
     }
 
-//change clip data
+    //change clip data
     const onClipChange = (clip, index) => {
         if (isCollab && clip?.isPrivate) {
             let a = [...personalClipsArray];
@@ -218,7 +242,7 @@ export default function IdeanGalleryList({
         }
     }
 
-// add new clip
+    // add new clip
     const addTempClip = async (data) => {
         const currentArrayIndex = personalClipsArray?.length > 0 ? personalClipsArray.findIndex(c => c.id === data.id) : -1
         if (currentArrayIndex === -1) {
@@ -227,13 +251,13 @@ export default function IdeanGalleryList({
             let parsedClip = await parseTempClip(data, user)
             parsedClip.uploading = true
             let clips = personalClipsArray?.length > 0 ? [...personalClipsArray] : []
-            clips.unshift({...parsedClip})
+            clips.unshift({ ...parsedClip })
             setPersonalClipsArray(clips)
             onNewClip()
         }
     }
 
-// delete clip
+    // delete clip
     const deleteClip = (item, index) => {
         apolloLib.client(session)
             .mutate({
@@ -245,7 +269,7 @@ export default function IdeanGalleryList({
                     isDeleted: true,
                 },
             })
-            .then(({data, error}) => {
+            .then(({ data, error }) => {
                 if (data) {
                     let a = [...personalClipsArray];
                     a.splice(index, 1);
@@ -270,7 +294,7 @@ export default function IdeanGalleryList({
             });
     };
 
-//hide clip
+    //hide clip
     const hideClip = (item, index, callBack) => {
         apolloLib.client(session)
             .mutate({
@@ -285,7 +309,7 @@ export default function IdeanGalleryList({
                     },
                 },
             })
-            .then(({data, error}) => {
+            .then(({ data, error }) => {
                 if (data) {
                     let a = [...personalClipsArray];
                     a.splice(index, 1);
@@ -304,7 +328,7 @@ export default function IdeanGalleryList({
             });
     };
 
-//report clip
+    //report clip
     const ReportUGC = (item, reason, otherText, index) => {
         const type = apiConstant.spaceTypes.ideanGallery;
         const data = {
@@ -316,13 +340,13 @@ export default function IdeanGalleryList({
             otherText,
             ownerType: item?.userType,
         };
-        const variables = {data, type};
+        const variables = { data, type };
         apolloLib.client(session)
             .mutate({
                 mutation: mutations.reportUGC,
                 variables,
             })
-            .then(({data, error, loading}) => {
+            .then(({ data, error, loading }) => {
                 if (data) {
                     hideClip(item, index, isSuccess => {
                         isSuccess
@@ -340,10 +364,10 @@ export default function IdeanGalleryList({
                 Toast.show(strings.reportingFailed);
             });
     };
-/////////////////////////////////// Views ///////////////////////////////////////////////
+    /////////////////////////////////// Views ///////////////////////////////////////////////
 
-// clip render
-    const renderClips = ({item, index}) => {
+    // clip render
+    const renderClips = ({ item, index }) => {
         return (
             <IdeanGalleryClipView
                 key={index}
@@ -359,8 +383,8 @@ export default function IdeanGalleryList({
                     isCollab
                         ? false
                         : profile.uid === user.uid
-                        ? false
-                        : !following
+                            ? false
+                            : !following
                 }
                 navigation={navigation}
                 isFocused={focused}
@@ -373,11 +397,11 @@ export default function IdeanGalleryList({
     }
 
 
-    const onReachEnd = () =>{
+    const onReachEnd = () => {
         debounce(fetchClip)
     }
 
-    const fetchClip = () =>{
+    const fetchClip = () => {
         try {
             if (fetching) return false
             if (isCollab && Object.keys(customFilter).length > 0) {
@@ -404,11 +428,11 @@ export default function IdeanGalleryList({
                                 },
                             },
                         })
-                        .then(({data, error}) => {
+                        .then(({ data, error }) => {
                             setLoading(false);
-                            const {personalClipsLatestFiltered} = data;
+                            const { personalClipsLatestFiltered } = data;
                             if (personalClipsLatestFiltered) {
-                                if(personalClipsLatestFiltered.length === 20)  setFetching(false)
+                                if (personalClipsLatestFiltered.length === 20) setFetching(false)
                                 setOriginalClipsArray([
                                     ...originalClipsArray,
                                     ...personalClipsLatestFiltered,
@@ -436,7 +460,7 @@ export default function IdeanGalleryList({
                         .catch(err => {
                             logger.e(err);
                         });
-                } else{
+                } else {
                     setCurrentlyPlaying(personalClipsArray[personalClipsArray?.length - 1]?.id)
                 }
             } else if (isCollab) {
@@ -453,10 +477,10 @@ export default function IdeanGalleryList({
                                 limit: 20,
                             },
                         })
-                        .then(({data, error}) => {
-                            const {personalClipsLatest} = data;
+                        .then(({ data, error }) => {
+                            const { personalClipsLatest } = data;
                             if (personalClipsLatest) {
-                                if(personalClipsLatest.length === 20)  setFetching(false)
+                                if (personalClipsLatest.length === 20) setFetching(false)
                                 setOriginalClipsArray([
                                     ...originalClipsArray,
                                     ...personalClipsLatest,
@@ -476,7 +500,7 @@ export default function IdeanGalleryList({
                                 ]);
                             }
                             if (error) {
-                                console.log("api error ",error)
+                                console.log("api error ", error)
                                 logger.e(error);
                             }
                         })
@@ -498,10 +522,10 @@ export default function IdeanGalleryList({
                             limit: 10,
                         },
                     })
-                    .then(({data, error}) => {
-                        const {personalClips} = data;
+                    .then(({ data, error }) => {
+                        const { personalClips } = data;
                         if (personalClips) {
-                            if(personalClips.length === 10)  setFetching(false)
+                            if (personalClips.length === 10) setFetching(false)
                             setOriginalClipsArray([
                                 ...originalClipsArray,
                                 ...personalClips,
@@ -536,7 +560,7 @@ export default function IdeanGalleryList({
 
     // main view
     return (
-        <View style={{paddingHorizontal: 20}}>
+        <View style={{ paddingHorizontal: 20 }}>
             {loading ? (
                 <View style={styles.loaderContainer}>
                     {isCollab ? (
@@ -568,8 +592,8 @@ export default function IdeanGalleryList({
                         onViewableItemsChanged={onIdeanViewRef.current}
                         viewabilityConfig={ideanViewConfigRef.current}
                         renderItem={renderClips}
-                        getItem={(data,index)=>data[index]}
-                        getItemCount={()=>personalClipsArray.length}
+                        getItem={(data, index) => data[index]}
+                        getItemCount={() => personalClipsArray.length}
                         keyExtractor={(item) => item.id}
                         scrollEnabled={
                             isCollab ? true : profile.uid === user.uid ? true : following
@@ -601,7 +625,7 @@ export default function IdeanGalleryList({
                     <>
                         <AttachClipCard
                             onPress={() => {
-                                if(user?.uid === profile?.uid)
+                                if (user?.uid === profile?.uid)
                                     setCreatePersonalClip(true)
                             }}
                             type={profile.userType}
@@ -625,7 +649,7 @@ export default function IdeanGalleryList({
     )
 }
 
-const SpaceStyle = ({colors}, width) => {
+const SpaceStyle = ({ colors }, width) => {
     return StyleSheet.create({
         loaderContainer: {
             width: '100%',

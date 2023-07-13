@@ -692,6 +692,7 @@ const getProfile = gql`
             gid
             userType
             displayName
+            email
             orgName
             profileImage
             profileImageB64

@@ -62,10 +62,11 @@ async function MessengerCache(messengerId, userToken = '', messages = []) {
     ).catch(logger.e);
     await Promise.all(
         messages.map(async message => {
+            console.log("message",message)
             await AsyncStorage.setItem(
                 `${prefix}_${userToken}_${messengerId}:${message.mtId}`,
                 JSON.stringify(message),
-            ).catch(logger.e);
+            ).catch((err)=>{console.log("Error",err)});
         }),
     );
 }
@@ -233,6 +234,7 @@ export async function manageConversation(
 ) {
     await getMessengerCache(messengerId, userToken)
         .then(async pm => {
+            console.log("PM",pm)
             const prev_messages = await pm.filter(p => p && p.mtId);
             if (Array.isArray(messages) && messages.length > 0) {
                 const conversations = await reFormatMessages(
@@ -254,7 +256,7 @@ export async function manageConversation(
                 setter(s => ({...s, conversations: prev_messages, fetch: false}));
             }
         })
-        .catch(logger.e);
+        .catch((err)=>{console.log("Error",err)});
 }
 
 // reformat messages

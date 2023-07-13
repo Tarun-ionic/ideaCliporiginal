@@ -454,7 +454,7 @@ export default function PersonalSpace() {
         uid: checkUser?.userType === userType.general ? checkUser?.uid : '',
         bid: checkUser?.userType !== userType.general ? checkUser?.uid : '',
     };
-
+    {console.log("blocked",blocked)}
 
     const content = () => {
         return !blocked  ? (
@@ -560,7 +560,6 @@ export default function PersonalSpace() {
                             status={status !== userStatus.archived}
                         />
                         <LineView/>
-
                         {
                             status && status !== userStatus.archived &&
                             content()}

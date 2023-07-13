@@ -78,7 +78,7 @@ function IdeanGalleryClipView({
 
 //lovitz states
     const [lovitzLatest, setLovitzLatest] = useState(item?.lovitsLatest || []);
-    const [lovitzCount, setLovitzCount] = useState(item?.lovitsCount || 0);
+    const [lovitzCount, setLovitzCount] = useState(item?.lovitsCount);
     const [lovitzLoader, setLovitzLoader] = useState(false);
     const [isLoved, setIsLoved] = useState(item?.isLoved || false);
 
@@ -117,7 +117,6 @@ function IdeanGalleryClipView({
 // initial clip load
     useEffect(() => {
         if (isFocused) {
-
             //checking for unpublished clip
             if (item?.cache === true && item?.uploading === true) {
                 if (!uploading && !uploadingComplete) {
@@ -184,7 +183,7 @@ function IdeanGalleryClipView({
             if (!muted)
                 setMuted(true)
         }
-    }, [item, isFocused])
+    }, [item, isFocused, profile, onClipChange, navigation])
 
 //initiate uploading
     useEffect(() => {
@@ -698,7 +697,7 @@ function IdeanGalleryClipView({
                         loading={lovitzLoader}
                     />
                     <Text style={{color: colors.secondaryDark, alignSelf: 'center'}}>
-                        {lovitzCount > 0 ? lovitzCount : ''}
+                        {lovitzCount > 0 ? lovitzCount : ''} 
                     </Text>
                 </View>
             </View>

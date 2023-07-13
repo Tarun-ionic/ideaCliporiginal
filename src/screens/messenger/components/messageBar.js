@@ -35,6 +35,7 @@ export default function MessageBar({
     const [cursorPos, setCursorPos] = useState(0);
     const [isKeyboardEmoji, setKeyboardEmoji] = useState(false);
     const handleSend = () => {
+        console.log("chat function")
         if (text.trim().length > 0 || emptyString) {
             Keyboard.dismiss();
             setText('');
@@ -140,16 +141,6 @@ export default function MessageBar({
                     style={styles.sendButton}
                 />
             </View>
-            {/* <EmojiBoard
-                containerStyle={{
-                    position: isKeyboardEmoji ? 'relative' : 'absolute',
-                }}
-                hideBackSpace={true}
-                tabBarPosition="bottom"
-                showBoard={isKeyboardEmoji}
-                onRemove={() => backspace()}
-                onClick={emojiUpdate}
-            /> */}
         </SafeAreaView>
     );
 }

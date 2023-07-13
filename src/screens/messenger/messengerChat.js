@@ -47,7 +47,7 @@ import NetInfo from "@react-native-community/netinfo";
 import {loadPopup, useDebounce} from "../../utilities/helper";
 import Toast from "react-native-simple-toast";
 import AlertPopup from "../components/utility/alertPopup";
-import database from "@react-native-firebase/database";
+import database from "@react-native-firebase/database"; 
 
 export default function MessengerChat() {
     const session = useSession();
@@ -182,6 +182,7 @@ export default function MessengerChat() {
 
     //setup chat
     const setupChat = chatRoom => {
+        console.log("chatRoom",chatRoom)
         const {id} = chatRoom;
         const firebaseRdRef = messengerChatRoomMessagesRef(id);
         firebaseCheck(firebaseRdRef, chatRoom);
@@ -518,6 +519,7 @@ export default function MessengerChat() {
     };
 
     const handleSendMessage = ({text, files}) => {
+        console.log("Chat function")
         SendMessage(
             messenger.firebaseRdRef,
             messenger.id,
@@ -526,7 +528,11 @@ export default function MessengerChat() {
             setMessenger,
             text,
             files,
-        ).then();
+        ).then((res)=>{
+            console.log("response",res)
+        }).then((err)=>{
+            console.log("error",err)
+        });
 
         if(isMutual === false && user?.uid !== messenger.creator){
             const chatRoomMutualRef = messengerChatRoomIsMutualChat(messenger?.id);
@@ -602,7 +608,7 @@ export default function MessengerChat() {
     );
 
     const gotoNav = () => {
-        navigation.push('PersonalSpace', {
+        navigation.navigate('PersonalSpace', {
             user: user,
             profile: messenger.user,
             goBack: true,

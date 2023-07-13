@@ -157,6 +157,7 @@ const profileData = {
     uid: '',
     userType: 'g-user',
     displayName: '',
+    email: '',
     profileImage: '',
     profileImageB64: '',
     motto: '',

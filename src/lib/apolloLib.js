@@ -12,6 +12,7 @@ import auth from '@react-native-firebase/auth';
 import {userStatus} from "../utilities/constant";
 
 const uri = `${API_BASE_PATH}gql`;
+console.log("uri ", uri)
 const httpLink = createHttpLink({
     uri: uri,
 });
