@@ -791,7 +791,8 @@ export default function PersonalDetails({
                         ) :
                             (
                                 profileInfo.followStatus != null && (
-                                    <View style={styles.blueButtonRow}>
+                                    <View style={styles.blueButtonRow}> 
+                                        {user.uid === profileInfo.uid ? 
                                         <GradiantButton
                                             cornerRadius={5}
                                             colors={[colors.chatButton, colors.chatButton]}
@@ -825,7 +826,42 @@ export default function PersonalDetails({
                                                     }
                                                 }
                                             }}
-                                        />
+                                        /> : 
+                                        profileInfo?.userType !== "g-user" && <GradiantButton
+                                        cornerRadius={5}
+                                        colors={[colors.chatButton, colors.chatButton]}
+                                        iconSize={user && user.uid === profileInfo.uid ? 25 : 20}
+                                        labelStyle={{
+                                            fontSize: scale.font.s,
+                                            color: colors.chatButtonText,
+                                            paddingHorizontal: 5,
+                                        }}
+                                        borderStyle={theme.dark ? { borderWidth: 1, borderColor: colors.darkModeBorder } : {}}
+                                        height={scale.ms(30)}
+                                        style={{ width: profileInfo?.userType !== "g-user" ? '50%' : '100%' }}
+                                        label={Platform.OS === 'ios' ? '1 : 1' : '1:1'}
+                                        leftIco={user && user.uid === profileInfo.uid ? iconAssets.chat : iconAssets.email}
+                                        // leftIco={screens.chat2}
+                                        onPress={() => {
+                                            if (status) {
+                                                if (user.uid === profileInfo.uid) {
+                                                    redirect2Chat();
+                                                } else {
+                                                    if (profileInfo.blockStatus) {
+                                                        alert(strings.userAccessDenied);
+                                                    } else {
+                                                        if (profileInfo.followStatus) {
+                                                            Linking.openURL(`${'mailto:'}${profileInfo?.email}${'?subject=Reach Out via IDEACLIP Mobile App'}`)
+                                                            // redirect2Chat();
+                                                        } else {
+                                                            alert(strings.collabFirst);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }}
+                                    />
+                                        }
 
                                         {profileInfo.uid !== user.uid && (
                                             <GradiantButton
@@ -857,7 +893,7 @@ export default function PersonalDetails({
                                                         : 'Collab Now'
                                                 }
                                                 borderStyle={profileInfo.blockStatus ? {} : profileInfo.followStatus ? theme.dark ? { borderWidth: 1, borderColor: colors.darkModeBorder } : {} : {}}
-                                                style={{ width: '50%' }}
+                                                style={{ width: profileInfo?.userType != "g-user" ? '50%' : '100%' }}
                                                 onPress={manageCollab}
                                             />
                                         )}

@@ -85,8 +85,10 @@ export default function Signup() {
     };
 
     const handleEmailCheck = () => {
+        console.log("here@")
         checkUserEmail(user.email)
             .then(res => {
+                console.log("here",res)
                 if (res === apiConstant.statusCodes.success) {
                     if (termsAndConditions) {
                         setIsLoading(false);

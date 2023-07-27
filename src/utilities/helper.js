@@ -166,6 +166,8 @@ export const updateDeviceToken = async (uid, session) => {
         },
     };
 
+    console.log("add token ===========", variables )
+
     await apolloLib
         .client(session)
         .mutate({

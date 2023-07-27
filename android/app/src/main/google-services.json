@@ -1,123 +1,54 @@
 {
   "project_info": {
-    "project_number": "785912708609",
-    "firebase_url": "https://ideaclip-app-dev-default-rtdb.firebaseio.com",
-    "project_id": "ideaclip-app-dev",
-    "storage_bucket": "ideaclip-app-dev.appspot.com"
+    "project_number": "206566280190",
+    "firebase_url": "https://ideaclip-app-default-rtdb.firebaseio.com",
+    "project_id": "ideaclip-app",
+    "storage_bucket": "ideaclip-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785912708609:android:b5d007aa6a73f1f7bc8a00",
+        "mobilesdk_app_id": "1:206566280190:android:8c081f8e05d71832db0eaf",
         "android_client_info": {
           "package_name": "com.actson.ideaclip"
         }
       },
       "oauth_client": [
         {
-          "client_id": "785912708609-6et72o55ohjkh0f2njmfls4on97lfkj5.apps.googleusercontent.com",
+          "client_id": "206566280190-kcq3asegghjo1n56tb6avs82011go6rl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.actson.ideaclip",
-            "certificate_hash": "6b84244f703ea9cd6ed13d075c77084e7d250b0a"
-          }
-        },
-        {
-          "client_id": "785912708609-mqjvq7d6sn4ck6oc8acv7p1jg5lovnsv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.actson.ideaclip",
-            "certificate_hash": "3cf5bc4d4b09325799ae62b16566adc9062bbd56"
-          }
-        },
-        {
-          "client_id": "785912708609-abpdl7tp29qlokrd0af1g0oe98uvk4v9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyChlD74p93hRqJupy5BYtFzWmzG83U413M"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "785912708609-abpdl7tp29qlokrd0af1g0oe98uvk4v9.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "785912708609-07u9ld00kr5gmkukahv68gv54kbslnf7.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.actson.ideaclip",
-                "app_store_id": "1578859437"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:785912708609:android:5b5103e05fc45dd9bc8a00",
-        "android_client_info": {
-          "package_name": "com.actson.ideaclipdev"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "785912708609-353p1i17sdu35tp7cj250pub30u63app.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.actson.ideaclipdev",
             "certificate_hash": "0433d18a7fe706b70dfb8c7454491af31780cb8d"
           }
         },
         {
-          "client_id": "785912708609-4k91bnn09t17gbgj9h53cbk3fiomgc3m.apps.googleusercontent.com",
+          "client_id": "206566280190-mlhr7jca7g2n1h8r8mljrokrih3nv83h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.actson.ideaclipdev",
-            "certificate_hash": "6b84244f703ea9cd6ed13d075c77084e7d250b0a"
-          }
-        },
-        {
-          "client_id": "785912708609-74jn1fjrgtk5cii5fn9m9dcn68ikqvmg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.actson.ideaclipdev",
-            "certificate_hash": "3cf5bc4d4b09325799ae62b16566adc9062bbd56"
-          }
-        },
-        {
-          "client_id": "785912708609-7i371gildmpfkhvl4bd7ci09oc7402mr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.actson.ideaclipdev",
+            "package_name": "com.actson.ideaclip",
             "certificate_hash": "f06693f60e9c0e54c0eb4ebc0081f2adf2a9153d"
           }
         },
         {
-          "client_id": "785912708609-abpdl7tp29qlokrd0af1g0oe98uvk4v9.apps.googleusercontent.com",
+          "client_id": "206566280190-8656b1qsni02mbjf0e75cohn67um6l1g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCTq2W22qRBULutcHwL7UCmy32ZXjuPT7Q"
+          "current_key": "AIzaSyBBzJeIPo2hsaKAz4jL8-gc8pwKZSfL8eg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "785912708609-abpdl7tp29qlokrd0af1g0oe98uvk4v9.apps.googleusercontent.com",
+              "client_id": "206566280190-8656b1qsni02mbjf0e75cohn67um6l1g.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "785912708609-07u9ld00kr5gmkukahv68gv54kbslnf7.apps.googleusercontent.com",
+              "client_id": "206566280190-9u7ndffriqivvtqoo9gi2j7m099t8e7n.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.actson.ideaclip",

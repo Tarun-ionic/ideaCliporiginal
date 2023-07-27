@@ -109,6 +109,7 @@ export const SessionProvider = ({children}) => {
                             deviceId: DeviceInfo.getUniqueId(),
                         },
                     };
+                    console.log("add token 1 ===============",variables )
                     await apolloLib
                         .client(session)
                         .mutate({

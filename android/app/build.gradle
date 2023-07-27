@@ -141,8 +141,8 @@ android {
         applicationId "com.actson.ideaclip"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 50
-        versionName "1.0.21.00"
+        versionCode 53
+        versionName "1.0.24.00"
         multiDexEnabled true
         ndk {
             debugSymbolLevel 'FULL'
