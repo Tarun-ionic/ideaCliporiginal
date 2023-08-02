@@ -793,40 +793,42 @@ export default function PersonalDetails({
                                 profileInfo.followStatus != null && (
                                     <View style={styles.blueButtonRow}> 
                                         {user.uid === profileInfo.uid ? 
-                                        <GradiantButton
-                                            cornerRadius={5}
-                                            colors={[colors.chatButton, colors.chatButton]}
-                                            iconSize={user && user.uid === profileInfo.uid ? 25 : 20}
-                                            labelStyle={{
-                                                fontSize: scale.font.s,
-                                                color: colors.chatButtonText,
-                                                paddingHorizontal: 5,
-                                            }}
-                                            borderStyle={theme.dark ? { borderWidth: 1, borderColor: colors.darkModeBorder } : {}}
-                                            height={scale.ms(30)}
-                                            style={{ width: '50%' }}
-                                            label={Platform.OS === 'ios' ? '1 : 1' : '1:1'}
-                                            leftIco={user && user.uid === profileInfo.uid ? iconAssets.chat : iconAssets.email}
-                                            // leftIco={screens.chat2}
-                                            onPress={() => {
-                                                if (status) {
-                                                    if (user.uid === profileInfo.uid) {
-                                                        redirect2Chat();
-                                                    } else {
-                                                        if (profileInfo.blockStatus) {
-                                                            alert(strings.userAccessDenied);
-                                                        } else {
-                                                            if (profileInfo.followStatus) {
-                                                                Linking.openURL(`${'mailto:'}${profileInfo?.email}${'?subject=Reach Out via IDEACLIP Mobile App'}`)
-                                                                // redirect2Chat();
-                                                            } else {
-                                                                alert(strings.collabFirst);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }}
-                                        /> : 
+                                        null
+                                        // <GradiantButton
+                                        //     cornerRadius={5}
+                                        //     colors={[colors.chatButton, colors.chatButton]}
+                                        //     iconSize={user && user.uid === profileInfo.uid ? 25 : 20}
+                                        //     labelStyle={{
+                                        //         fontSize: scale.font.s,
+                                        //         color: colors.chatButtonText,
+                                        //         paddingHorizontal: 5,
+                                        //     }}
+                                        //     borderStyle={theme.dark ? { borderWidth: 1, borderColor: colors.darkModeBorder } : {}}
+                                        //     height={scale.ms(30)}
+                                        //     style={{ width: '50%' }}
+                                        //     label={Platform.OS === 'ios' ? '1 : 1' : '1:1'}
+                                        //     leftIco={user && user.uid === profileInfo.uid ? iconAssets.chat : iconAssets.email}
+                                        //     // leftIco={screens.chat2}
+                                        //     onPress={() => {
+                                        //         if (status) {
+                                        //             if (user.uid === profileInfo.uid) {
+                                        //                 redirect2Chat();
+                                        //             } else {
+                                        //                 if (profileInfo.blockStatus) {
+                                        //                     alert(strings.userAccessDenied);
+                                        //                 } else {
+                                        //                     if (profileInfo.followStatus) {
+                                        //                         Linking.openURL(`${'mailto:'}${profileInfo?.email}${'?subject=Reach Out via IDEACLIP Mobile App'}`)
+                                        //                         // redirect2Chat();
+                                        //                     } else {
+                                        //                         alert(strings.collabFirst);
+                                        //                     }
+                                        //                 }
+                                        //             }
+                                        //         }
+                                        //     }}
+                                        // /> 
+                                        : 
                                         profileInfo?.userType !== "g-user" && <GradiantButton
                                         cornerRadius={5}
                                         colors={[colors.chatButton, colors.chatButton]}
@@ -905,14 +907,14 @@ export default function PersonalDetails({
                                                 labelStyle={{
                                                     fontSize: scale.font.s,
                                                     color: colors.inviteButtonText,
-                                                    paddingHorizontal: 5,
+                                                    paddingHorizontal: 0,
                                                 }}
                                                 height={scale.ms(30)}
                                                 label={'Invite'}
                                                 borderStyle={theme.dark ? { borderWidth: 1, borderColor: colors.darkModeBorder } : {}}
                                                 leftIco={iconAssets.invite}
                                                 // leftIco={screens.invite}
-                                                style={{ width: '50%' }}
+                                                style={{ width: '60%',marginLeft:50   }}
                                                 onPress={onShare}
                                             />
                                         )}
